@@ -1,0 +1,68 @@
+{
+    "name": "LendLedger",
+    "short_name": "LendLedger",
+    "description": "Track loans, manage reminders, and never forget who owes you. Premium money management made simple.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0a0a",
+    "theme_color": "#ffd700",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/screenshots/dashboard.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "/screenshots/mobile.png",
+            "sizes": "750x1334",
+            "type": "image/png",
+            "form_factor": "narrow"
+        }
+    ],
+    "categories": [
+        "finance",
+        "productivity"
+    ],
+    "shortcuts": [
+        {
+            "name": "Add Loan",
+            "short_name": "Add",
+            "description": "Quick add a new loan",
+            "url": "/loans/new",
+            "icons": [
+                {
+                    "src": "/icons/icon-192x192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Dashboard",
+            "short_name": "Home",
+            "description": "View your dashboard",
+            "url": "/dashboard",
+            "icons": [
+                {
+                    "src": "/icons/icon-192x192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ]
+}
