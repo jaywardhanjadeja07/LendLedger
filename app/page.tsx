@@ -15,7 +15,7 @@ export default function Home() {
             </div>
 
             <div className="flex items-center gap-4">
-              <Link href="/auth/login" className="btn btn-ghost">
+              <Link href="/login" className="btn btn-ghost">
                 Sign In
               </Link>
               <Link href="/dashboard" className="btn btn-primary">

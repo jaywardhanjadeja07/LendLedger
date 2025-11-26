@@ -4,43 +4,96 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Loan } from '../../lib/types';
-import { loansStorage } from '../../lib/storage';
 import { formatCurrency, formatDate, getStatusBadgeClass, daysUntilDue } from '../../lib/utils';
+import { createClient } from '../../lib/supabase';
 
 export default function LoanDetailsPage() {
     const router = useRouter();
     const params = useParams();
     const [loan, setLoan] = useState<Loan | null>(null);
+    const [loading, setLoading] = useState(true);
+    const supabase = createClient();
 
     useEffect(() => {
-        const id = params.id as string;
-        if (id) {
-            const loanData = loansStorage.getById(id);
-            if (loanData) {
-                setLoan(loanData);
+        const fetchLoan = async () => {
+            const id = params.id as string;
+            if (!id) return;
+
+            const { data, error } = await supabase
+                .from('loans')
+                .select('*')
+                .eq('id', id)
+                .single();
+
+            if (error) {
+                console.error('Error fetching loan:', error);
+            } else if (data) {
+                setLoan({
+                    id: data.id,
+                    userId: data.user_id,
+                    type: data.type,
+                    contactName: data.contact_name,
+                    contactEmail: data.contact_email,
+                    contactPhone: data.contact_phone,
+                    amount: data.amount,
+                    currency: data.currency,
+                    dueDate: new Date(data.due_date),
+                    createdDate: new Date(data.created_date),
+                    status: data.status,
+                    interestRate: data.interest_rate,
+                    notes: data.notes,
+                    settledDate: data.settled_date ? new Date(data.settled_date) : undefined,
+                });
             }
-        }
+            setLoading(false);
+        };
+
+        fetchLoan();
     }, [params.id]);
 
-    const handleMarkAsSettled = () => {
+    const handleMarkAsSettled = async () => {
         if (!loan) return;
 
-        loansStorage.update(loan.id, {
-            status: 'settled',
-            settledDate: new Date(),
-        });
+        const { error } = await supabase
+            .from('loans')
+            .update({ status: 'settled', settled_date: new Date().toISOString() })
+            .eq('id', loan.id);
 
-        router.push('/dashboard');
+        if (error) {
+            console.error('Error updating loan:', error);
+            alert('Failed to update loan');
+        } else {
+            router.push('/dashboard');
+            router.refresh();
+        }
     };
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (!loan) return;
 
         if (confirm('Are you sure you want to delete this loan? This action cannot be undone.')) {
-            loansStorage.delete(loan.id);
-            router.push('/dashboard');
+            const { error } = await supabase
+                .from('loans')
+                .delete()
+                .eq('id', loan.id);
+
+            if (error) {
+                console.error('Error deleting loan:', error);
+                alert('Failed to delete loan');
+            } else {
+                router.push('/dashboard');
+                router.refresh();
+            }
         }
     };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-500"></div>
+            </div>
+        );
+    }
 
     if (!loan) {
         return (
@@ -70,7 +123,6 @@ export default function LoanDetailsPage() {
                             </div>
                             <span className="text-2xl font-bold text-gradient">LendLedger</span>
                         </Link>
-
                         <Link href="/loans" className="btn btn-ghost">
                             All Loans
                         </Link>

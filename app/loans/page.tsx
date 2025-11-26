@@ -3,21 +3,85 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Loan } from '../lib/types';
-import { loansStorage } from '../lib/storage';
 import { formatCurrency, formatDate, getStatusBadgeClass } from '../lib/utils';
+import { createClient } from '../lib/supabase';
+import { useRouter } from 'next/navigation';
 
 export default function LoansPage() {
     const [loans, setLoans] = useState<Loan[]>([]);
     const [filter, setFilter] = useState<'all' | 'lent' | 'borrowed' | 'active' | 'settled'>('all');
     const [search, setSearch] = useState('');
+    const [loading, setLoading] = useState(true);
+    const supabase = createClient();
+    const router = useRouter();
 
     useEffect(() => {
         loadLoans();
+
+        const channel = supabase
+            .channel('loans-changes')
+            .on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'loans',
+                },
+                (payload) => {
+                    console.log('Realtime update:', payload);
+                    loadLoans(); // Reload to get fresh data and ensure consistency
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
     }, []);
 
-    const loadLoans = () => {
-        const allLoans = loansStorage.getAll();
-        setLoans(allLoans);
+    const loadLoans = async () => {
+        try {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) {
+                router.push('/login');
+                return;
+            }
+
+            const { data, error } = await supabase
+                .from('loans')
+                .select('*')
+                .order('created_date', { ascending: false });
+
+            if (error) {
+                console.error('Error fetching loans:', error);
+                return;
+            }
+
+            if (data) {
+                // Map snake_case to camelCase
+                const mappedLoans: Loan[] = data.map((item: any) => ({
+                    id: item.id,
+                    userId: item.user_id,
+                    type: item.type,
+                    contactName: item.contact_name,
+                    contactEmail: item.contact_email,
+                    contactPhone: item.contact_phone,
+                    amount: item.amount,
+                    currency: item.currency,
+                    dueDate: new Date(item.due_date),
+                    createdDate: new Date(item.created_date),
+                    status: item.status,
+                    interestRate: item.interest_rate,
+                    notes: item.notes,
+                    settledDate: item.settled_date ? new Date(item.settled_date) : undefined,
+                }));
+                setLoans(mappedLoans);
+            }
+        } catch (error) {
+            console.error('Unexpected error:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const filteredLoans = loans.filter(loan => {
@@ -34,6 +98,14 @@ export default function LoansPage() {
 
         return true;
     });
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-500"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen pb-20">
