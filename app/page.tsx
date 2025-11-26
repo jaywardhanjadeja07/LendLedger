@@ -67,9 +67,22 @@ export default function Home() {
                 <Link href="/auth" className="cta-primary text-lg">
                   Try for Free
                 </Link>
-                <button className="px-6 py-3 rounded-lg border-2 border-white/30 hover:bg-white/10 font-semibold transition-all flex items-center gap-2">
-                  <span>📱</span> Install App
-                </button>
+                <div className="flex items-center gap-3">
+                  <button className="px-4 py-2.5 rounded-lg bg-black text-white border border-gray-700 hover:bg-gray-900 transition-all flex items-center gap-2 shadow-lg">
+                    <span className="text-2xl"></span>
+                    <div className="text-left leading-tight">
+                      <div className="text-[10px] font-medium text-gray-400">Download on the</div>
+                      <div className="text-sm font-bold">App Store</div>
+                    </div>
+                  </button>
+                  <button className="px-4 py-2.5 rounded-lg bg-black text-white border border-gray-700 hover:bg-gray-900 transition-all flex items-center gap-2 shadow-lg">
+                    <span className="text-2xl">▶</span>
+                    <div className="text-left leading-tight">
+                      <div className="text-[10px] font-medium text-gray-400">GET IT ON</div>
+                      <div className="text-sm font-bold">Google Play</div>
+                    </div>
+                  </button>
+                </div>
               </div>
 
               <div className="flex items-center justify-center lg:justify-start gap-6 text-sm font-medium text-blue-100">
@@ -255,10 +268,10 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 bg-gray-900 text-gray-400 border-t border-gray-800">
+      <footer className="py-12 bg-gray-900 text-gray-400 border-t border-gray-800 relative z-10">
         <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div className="col-span-1 md:col-span-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-8">
+            <div className="col-span-1 sm:col-span-2">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 relative">
                   <Image
@@ -270,24 +283,24 @@ export default function Home() {
                 </div>
                 <span className="text-xl font-bold text-white">LendLedger</span>
               </div>
-              <p className="max-w-xs">
+              <p className="max-w-xs leading-relaxed">
                 The smart way to track loans, manage reminders, and keep your financial relationships healthy.
               </p>
             </div>
             <div>
               <h4 className="text-white font-bold mb-4">Product</h4>
-              <ul className="space-y-2">
-                <li><a href="#" className="hover:text-blue-400">Features</a></li>
-                <li><a href="#" className="hover:text-blue-400">Pricing</a></li>
-                <li><a href="#" className="hover:text-blue-400">Mobile App</a></li>
+              <ul className="space-y-3">
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Features</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Pricing</a></li>
+                <li><a href="#" className="hover:text-blue-400 transition-colors">Mobile App</a></li>
               </ul>
             </div>
             <div>
               <h4 className="text-white font-bold mb-4">Legal</h4>
-              <ul className="space-y-2">
-                <li><Link href="/privacy" className="hover:text-blue-400">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="hover:text-blue-400">Terms of Service</Link></li>
-                <li><Link href="/contact" className="hover:text-blue-400">Contact Us</Link></li>
+              <ul className="space-y-3">
+                <li><Link href="/privacy" className="hover:text-blue-400 transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="hover:text-blue-400 transition-colors">Terms of Service</Link></li>
+                <li><Link href="/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link></li>
               </ul>
             </div>
           </div>
