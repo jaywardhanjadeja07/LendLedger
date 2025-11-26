@@ -44,7 +44,7 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
+      <section className="relative pt-32 pb-24 lg:pt-44 lg:pb-32 overflow-hidden">
         {/* Background Elements */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
           <div className="absolute top-20 left-20 w-72 h-72 bg-indigo-600/20 rounded-full blur-[100px] animate-pulse"></div>
@@ -52,24 +52,24 @@ export default function LandingPage() {
         </div>
 
         <div className="container relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left animate-fadeIn">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="text-center lg:text-left animate-fadeIn space-y-6">
               {/* SEO-Optimized H1 */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-4">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
                 LendLedger – Loan tracking and reminder app for India
               </h1>
 
               {/* India-Specific Tagline */}
-              <p className="text-xl md:text-2xl text-gradient mb-6 font-semibold">
+              <p className="text-xl md:text-2xl text-gradient font-semibold">
                 Track loans, shop credits, and shared expenses in India with smart reminders
               </p>
 
-              <p className="text-lg text-gray-400 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-lg text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 Manage money you've lent or borrowed with <span className="text-white font-medium">WhatsApp reminders, UPI payment links, and legal loan agreements</span>. Built specifically for INR and Indian users.
               </p>
 
               {/* Primary CTAs */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start mb-8">
+              <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-4">
                 <Link href="/login" className="btn btn-primary w-full sm:w-auto text-lg px-10 py-4 shadow-xl hover:shadow-indigo-500/40">
                   Start Free →
                 </Link>
@@ -79,7 +79,7 @@ export default function LandingPage() {
               </div>
 
               {/* Trust Badges */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-gray-400">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-gray-400 pt-2">
                 <div className="flex items-center gap-2">
                   <span className="text-green-400">✓</span>
                   <span>No credit card required</span>
@@ -95,16 +95,16 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* App Mockup */}
-            <div className="relative animate-float lg:h-[600px] flex items-center justify-center">
+            {/* Phone Mockup with App Banner */}
+            <div className="relative animate-float lg:h-[650px] flex items-center justify-center">
               <div className="relative w-full max-w-md z-10">
-                <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-3xl blur-2xl opacity-30 animate-pulse"></div>
+                <div className="absolute -inset-6 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-3xl blur-3xl opacity-25 animate-pulse"></div>
                 <Image
-                  src="/assets/app-banner.png"
-                  alt="LendLedger App Preview"
+                  src="/assets/phone-mockup.png"
+                  alt="LendLedger App - Coming Soon"
                   width={500}
-                  height={600}
-                  className="relative z-10 drop-shadow-2xl rounded-2xl"
+                  height={650}
+                  className="relative z-10 drop-shadow-2xl"
                   priority
                 />
               </div>
@@ -114,14 +114,14 @@ export default function LandingPage() {
       </section>
 
       {/* Features Grid */}
-      <section className="py-24 relative">
+      <section className="py-28 relative">
         <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="heading-lg mb-4 text-white">Everything you need to manage loans in India</h2>
-            <p className="text-gray-400 text-lg">Track money lent to friends, manage shop credits, and never miss a payment again.</p>
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <h2 className="heading-lg mb-6 text-white">Everything you need to manage loans in India</h2>
+            <p className="text-gray-400 text-lg leading-relaxed">Track money lent to friends, manage shop credits, and never miss a payment again.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {[
               {
                 icon: '📝',
@@ -154,12 +154,12 @@ export default function LandingPage() {
                 desc: 'Bank-grade encryption with real-time multi-device sync. Your data is safe, encrypted, and accessible from anywhere.'
               },
             ].map((feature, i) => (
-              <div key={i} className="glass-card p-8 group hover:bg-white/5">
+              <div key={i} className="glass-card p-8 group hover:bg-white/5 transition-all duration-300">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-4xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-indigo-500/20">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-indigo-400 transition-colors">{feature.title}</h3>
-                <p className="text-gray-400 leading-relaxed">{feature.desc}</p>
+                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-indigo-400 transition-colors">{feature.title}</h3>
+                <p className="text-gray-400 leading-relaxed text-base">{feature.desc}</p>
               </div>
             ))}
           </div>
