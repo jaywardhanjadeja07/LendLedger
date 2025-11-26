@@ -107,24 +107,24 @@ export default function NewLoanPage() {
     };
 
     return (
-        <div className="min-h-screen pb-20 bg-gray-900 text-white font-sans">
+        <div className="min-h-screen pb-20 bg-black text-white font-sans">
             {/* Navigation */}
-            <nav className="glass sticky top-0 z-50 border-b border-white/10 bg-gray-900/80 backdrop-blur-md">
+            <nav className="glass sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-md">
                 <div className="container">
                     <div className="flex items-center justify-between h-20">
                         <Link href="/dashboard" className="flex items-center gap-3 group">
-                            <div className="w-10 h-10 relative">
+                            <div className="w-10 h-10 relative transition-transform group-hover:scale-110">
                                 <Image
-                                    src="/assets/logo-polished.png"
+                                    src="/assets/logo.png"
                                     alt="LendLedger Logo"
                                     fill
                                     className="object-contain"
                                 />
                             </div>
-                            <span className="text-2xl font-bold text-white hidden sm:block tracking-tight">LendLedger</span>
+                            <span className="text-2xl font-bold text-white hidden sm:block tracking-tight group-hover:text-indigo-400 transition-colors">LendLedger</span>
                         </Link>
 
-                        <Link href="/dashboard" className="btn btn-ghost hover:text-blue-400">
+                        <Link href="/dashboard" className="btn btn-ghost hover:text-indigo-400">
                             Cancel
                         </Link>
                     </div>
@@ -150,7 +150,7 @@ export default function NewLoanPage() {
                             </div>
                         )}
 
-                        <form onSubmit={handleSubmit} className="glass-card p-8 space-y-8 animate-fadeIn bg-gray-800/40 border-blue-500/20 shadow-xl" style={{ animationDelay: '100ms' }}>
+                        <form onSubmit={handleSubmit} className="glass-card p-8 space-y-8 animate-fadeIn bg-gray-900/40 border-indigo-500/20 shadow-xl" style={{ animationDelay: '100ms' }}>
                             {/* Loan Type */}
                             <div>
                                 <label className="block mb-4 font-semibold text-gray-300 text-sm uppercase tracking-wider">Transaction Type</label>
@@ -159,25 +159,25 @@ export default function NewLoanPage() {
                                         type="button"
                                         onClick={() => setFormData({ ...formData, type: 'lent' })}
                                         className={`relative p-6 rounded-xl border-2 transition-all duration-300 flex flex-col items-center gap-3 ${formData.type === 'lent'
-                                                ? 'bg-blue-600/20 border-blue-500 shadow-blue-lg scale-[1.02]'
+                                                ? 'bg-indigo-600/20 border-indigo-500 shadow-neon scale-[1.02]'
                                                 : 'bg-gray-800/50 border-gray-700 hover:border-gray-500 hover:bg-gray-800'
                                             }`}
                                     >
                                         <div className={`text-4xl mb-1 ${formData.type === 'lent' ? 'scale-110' : 'grayscale opacity-70'} transition-all`}>💸</div>
                                         <span className={`font-bold ${formData.type === 'lent' ? 'text-white' : 'text-gray-400'}`}>I Lent Money</span>
-                                        {formData.type === 'lent' && <div className="absolute top-3 right-3 w-3 h-3 bg-blue-500 rounded-full shadow-lg shadow-blue-500/50"></div>}
+                                        {formData.type === 'lent' && <div className="absolute top-3 right-3 w-3 h-3 bg-indigo-500 rounded-full shadow-lg shadow-indigo-500/50"></div>}
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, type: 'borrowed' })}
                                         className={`relative p-6 rounded-xl border-2 transition-all duration-300 flex flex-col items-center gap-3 ${formData.type === 'borrowed'
-                                                ? 'bg-purple-600/20 border-purple-500 shadow-purple-lg scale-[1.02]'
+                                                ? 'bg-violet-600/20 border-violet-500 shadow-neon scale-[1.02]'
                                                 : 'bg-gray-800/50 border-gray-700 hover:border-gray-500 hover:bg-gray-800'
                                             }`}
                                     >
                                         <div className={`text-4xl mb-1 ${formData.type === 'borrowed' ? 'scale-110' : 'grayscale opacity-70'} transition-all`}>💰</div>
                                         <span className={`font-bold ${formData.type === 'borrowed' ? 'text-white' : 'text-gray-400'}`}>I Borrowed Money</span>
-                                        {formData.type === 'borrowed' && <div className="absolute top-3 right-3 w-3 h-3 bg-purple-500 rounded-full shadow-lg shadow-purple-500/50"></div>}
+                                        {formData.type === 'borrowed' && <div className="absolute top-3 right-3 w-3 h-3 bg-violet-500 rounded-full shadow-lg shadow-violet-500/50"></div>}
                                     </button>
                                 </div>
                             </div>
@@ -191,7 +191,7 @@ export default function NewLoanPage() {
                                     {/* Photo Upload */}
                                     <div className="flex-shrink-0">
                                         <div
-                                            className="w-24 h-24 rounded-full bg-gray-800 border-2 border-dashed border-gray-600 flex items-center justify-center cursor-pointer hover:border-blue-500 hover:bg-gray-800/80 transition-all relative overflow-hidden group"
+                                            className="w-24 h-24 rounded-full bg-gray-800 border-2 border-dashed border-gray-600 flex items-center justify-center cursor-pointer hover:border-indigo-500 hover:bg-gray-800/80 transition-all relative overflow-hidden group"
                                             onClick={() => fileInputRef.current?.click()}
                                         >
                                             {photoPreview ? (
@@ -221,7 +221,7 @@ export default function NewLoanPage() {
                                             <input
                                                 type="text"
                                                 required
-                                                className="input w-full bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                                className="input w-full bg-black/50 border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                                 placeholder="e.g. John Doe"
                                                 value={formData.contactName}
                                                 onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
@@ -232,7 +232,7 @@ export default function NewLoanPage() {
                                                 <label className="block mb-1.5 text-sm text-gray-400">Email (Optional)</label>
                                                 <input
                                                     type="email"
-                                                    className="input w-full bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                                    className="input w-full bg-black/50 border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                                     placeholder="john@example.com"
                                                     value={formData.contactEmail}
                                                     onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
@@ -242,7 +242,7 @@ export default function NewLoanPage() {
                                                 <label className="block mb-1.5 text-sm text-gray-400">Phone (Optional)</label>
                                                 <input
                                                     type="tel"
-                                                    className="input w-full bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                                    className="input w-full bg-black/50 border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                                     placeholder="+91 98765 43210"
                                                     value={formData.contactPhone}
                                                     onChange={(e) => setFormData({ ...formData, contactPhone: e.target.value })}
@@ -268,7 +268,7 @@ export default function NewLoanPage() {
                                                 required
                                                 min="0"
                                                 step="0.01"
-                                                className="input w-full pl-10 text-xl font-bold bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                                className="input w-full pl-10 text-xl font-bold bg-black/50 border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                                 placeholder="0.00"
                                                 value={formData.amount}
                                                 onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
@@ -280,7 +280,7 @@ export default function NewLoanPage() {
                                         <input
                                             type="date"
                                             required
-                                            className="input w-full bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                            className="input w-full bg-black/50 border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                             value={formData.dueDate}
                                             onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
                                         />
@@ -295,7 +295,7 @@ export default function NewLoanPage() {
                                         type="number"
                                         min="0"
                                         step="0.01"
-                                        className="input w-full md:w-1/2 bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                        className="input w-full md:w-1/2 bg-black/50 border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                         placeholder="e.g. 5.5"
                                         value={formData.interestRate}
                                         onChange={(e) => setFormData({ ...formData, interestRate: e.target.value })}
@@ -309,7 +309,7 @@ export default function NewLoanPage() {
                             <div>
                                 <label className="block mb-1.5 text-sm text-gray-400 font-semibold uppercase tracking-wider">Notes</label>
                                 <textarea
-                                    className="input w-full min-h-24 resize-y bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                    className="input w-full min-h-24 resize-y bg-black/50 border-gray-700 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                     placeholder="Add any additional details about this transaction..."
                                     value={formData.notes}
                                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
@@ -321,7 +321,7 @@ export default function NewLoanPage() {
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="btn btn-primary w-full py-4 text-lg font-bold shadow-xl hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                                    className="btn btn-primary w-full py-4 text-lg font-bold shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                                 >
                                     {loading ? (
                                         <span className="flex items-center justify-center gap-2">
@@ -339,20 +339,20 @@ export default function NewLoanPage() {
                     {/* Sidebar / Preview */}
                     <div className="lg:col-span-1 space-y-6">
                         {/* Reminder Preview */}
-                        <div className="glass-card p-6 bg-gray-800/40 border-blue-500/20 animate-fadeIn sticky top-24" style={{ animationDelay: '200ms' }}>
+                        <div className="glass-card p-6 bg-gray-900/40 border-indigo-500/20 animate-fadeIn sticky top-24" style={{ animationDelay: '200ms' }}>
                             <h3 className="heading-sm mb-4 text-white flex items-center gap-2 font-bold">
                                 <span>📱</span> Reminder Preview
                             </h3>
 
                             <div className="mb-4">
                                 <label className="text-xs text-gray-400 mb-2 block font-semibold uppercase">Tone</label>
-                                <div className="flex gap-2 p-1 bg-gray-900 rounded-lg border border-gray-700">
+                                <div className="flex gap-2 p-1 bg-black rounded-lg border border-gray-700">
                                     {(['friendly', 'urgent', 'legal'] as const).map(tone => (
                                         <button
                                             key={tone}
                                             onClick={() => setReminderTone(tone)}
                                             className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-all ${reminderTone === tone
-                                                ? 'bg-blue-600 text-white shadow-lg'
+                                                ? 'bg-indigo-600 text-white shadow-lg'
                                                 : 'text-gray-400 hover:text-white hover:bg-gray-800'
                                                 }`}
                                         >
@@ -362,8 +362,8 @@ export default function NewLoanPage() {
                                 </div>
                             </div>
 
-                            <div className="bg-gray-900 p-4 rounded-xl border border-gray-700 relative shadow-inner">
-                                <div className="absolute -right-2 top-4 w-4 h-4 bg-gray-900 border-l border-b border-gray-700 transform rotate-45"></div>
+                            <div className="bg-black p-4 rounded-xl border border-gray-700 relative shadow-inner">
+                                <div className="absolute -right-2 top-4 w-4 h-4 bg-black border-l border-b border-gray-700 transform rotate-45"></div>
                                 <p className="text-sm text-gray-300 leading-relaxed font-mono">
                                     {getReminderPreview()}
                                 </p>
@@ -375,8 +375,8 @@ export default function NewLoanPage() {
                         </div>
 
                         {/* Pro Tip */}
-                        <div className="glass-card p-6 bg-gradient-to-br from-blue-900/20 to-purple-900/20 border-blue-500/10 animate-fadeIn" style={{ animationDelay: '300ms' }}>
-                            <h3 className="heading-sm mb-2 text-blue-400 font-bold flex items-center gap-2">
+                        <div className="glass-card p-6 bg-gradient-to-br from-indigo-900/20 to-violet-900/20 border-indigo-500/10 animate-fadeIn" style={{ animationDelay: '300ms' }}>
+                            <h3 className="heading-sm mb-2 text-indigo-400 font-bold flex items-center gap-2">
                                 <span>💡</span> Pro Tip
                             </h3>
                             <p className="text-sm text-gray-400">
