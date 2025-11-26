@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,6 +13,9 @@ export default function NewLoanPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [reminderTone, setReminderTone] = useState<'friendly' | 'urgent' | 'legal'>('friendly');
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+
     const [formData, setFormData] = useState({
         type: 'lent' as 'lent' | 'borrowed',
         contactName: '',
@@ -24,6 +27,17 @@ export default function NewLoanPage() {
         notes: '',
         interestRate: '',
     });
+
+    const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPhotoPreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -44,6 +58,10 @@ export default function NewLoanPage() {
                 return;
             }
 
+            // In a real app, we would upload the photo to Supabase Storage here
+            // and get the URL to save in the database.
+            // const photoUrl = await uploadPhoto(photoFile);
+
             const { error: insertError } = await supabase.from('loans').insert({
                 user_id: user.id,
                 type: formData.type,
@@ -57,6 +75,7 @@ export default function NewLoanPage() {
                 status: 'active',
                 notes: formData.notes || null,
                 interest_rate: formData.interestRate ? parseFloat(formData.interestRate) : null,
+                // photo_url: photoUrl // Add this column to DB if needed
             });
 
             if (insertError) {
@@ -88,7 +107,7 @@ export default function NewLoanPage() {
     };
 
     return (
-        <div className="min-h-screen pb-20 bg-gray-900 text-white">
+        <div className="min-h-screen pb-20 bg-gray-900 text-white font-sans">
             {/* Navigation */}
             <nav className="glass sticky top-0 z-50 border-b border-white/10 bg-gray-900/80 backdrop-blur-md">
                 <div className="container">
@@ -96,13 +115,13 @@ export default function NewLoanPage() {
                         <Link href="/dashboard" className="flex items-center gap-3 group">
                             <div className="w-10 h-10 relative">
                                 <Image
-                                    src="/assets/logo-promo.png"
+                                    src="/assets/logo-polished.png"
                                     alt="LendLedger Logo"
                                     fill
                                     className="object-contain"
                                 />
                             </div>
-                            <span className="text-2xl font-bold text-white hidden sm:block">LendLedger</span>
+                            <span className="text-2xl font-bold text-white hidden sm:block tracking-tight">LendLedger</span>
                         </Link>
 
                         <Link href="/dashboard" className="btn btn-ghost hover:text-blue-400">
@@ -114,179 +133,205 @@ export default function NewLoanPage() {
 
             {/* Form */}
             <div className="container pt-12">
-                <div className="max-w-4xl mx-auto grid lg:grid-cols-3 gap-8">
+                <div className="max-w-5xl mx-auto grid lg:grid-cols-3 gap-8">
 
                     {/* Main Form */}
                     <div className="lg:col-span-2">
                         <div className="mb-8 animate-fadeIn">
-                            <h1 className="heading-lg mb-2 text-white">Add New Loan</h1>
-                            <p className="text-gray-400">
+                            <h1 className="heading-lg mb-2 text-white font-bold">Add New Loan</h1>
+                            <p className="text-gray-400 text-lg">
                                 Track money you lent or borrowed
                             </p>
                         </div>
 
                         {error && (
-                            <div className="mb-6 p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 animate-fadeIn">
-                                ⚠️ {error}
+                            <div className="mb-6 p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 animate-fadeIn flex items-center gap-2">
+                                <span>⚠️</span> {error}
                             </div>
                         )}
 
-                        <form onSubmit={handleSubmit} className="glass-card p-6 md:p-8 space-y-6 animate-fadeIn bg-gray-800/50 border-blue-500/20" style={{ animationDelay: '100ms' }}>
+                        <form onSubmit={handleSubmit} className="glass-card p-8 space-y-8 animate-fadeIn bg-gray-800/40 border-blue-500/20 shadow-xl" style={{ animationDelay: '100ms' }}>
                             {/* Loan Type */}
                             <div>
-                                <label className="block mb-3 font-semibold text-gray-300">Loan Type</label>
-                                <div className="grid grid-cols-2 gap-4">
+                                <label className="block mb-4 font-semibold text-gray-300 text-sm uppercase tracking-wider">Transaction Type</label>
+                                <div className="grid grid-cols-2 gap-6">
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, type: 'lent' })}
-                                        className={`btn ${formData.type === 'lent' ? 'btn-primary shadow-blue-lg' : 'btn-ghost bg-gray-700/50'} p-6 h-auto flex-col gap-2 transition-all`}
+                                        className={`relative p-6 rounded-xl border-2 transition-all duration-300 flex flex-col items-center gap-3 ${formData.type === 'lent'
+                                                ? 'bg-blue-600/20 border-blue-500 shadow-blue-lg scale-[1.02]'
+                                                : 'bg-gray-800/50 border-gray-700 hover:border-gray-500 hover:bg-gray-800'
+                                            }`}
                                     >
-                                        <span className="text-3xl">💸</span>
-                                        <span>I Lent Money</span>
+                                        <div className={`text-4xl mb-1 ${formData.type === 'lent' ? 'scale-110' : 'grayscale opacity-70'} transition-all`}>💸</div>
+                                        <span className={`font-bold ${formData.type === 'lent' ? 'text-white' : 'text-gray-400'}`}>I Lent Money</span>
+                                        {formData.type === 'lent' && <div className="absolute top-3 right-3 w-3 h-3 bg-blue-500 rounded-full shadow-lg shadow-blue-500/50"></div>}
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => setFormData({ ...formData, type: 'borrowed' })}
-                                        className={`btn ${formData.type === 'borrowed' ? 'btn-primary shadow-blue-lg' : 'btn-ghost bg-gray-700/50'} p-6 h-auto flex-col gap-2 transition-all`}
+                                        className={`relative p-6 rounded-xl border-2 transition-all duration-300 flex flex-col items-center gap-3 ${formData.type === 'borrowed'
+                                                ? 'bg-purple-600/20 border-purple-500 shadow-purple-lg scale-[1.02]'
+                                                : 'bg-gray-800/50 border-gray-700 hover:border-gray-500 hover:bg-gray-800'
+                                            }`}
                                     >
-                                        <span className="text-3xl">💰</span>
-                                        <span>I Borrowed Money</span>
+                                        <div className={`text-4xl mb-1 ${formData.type === 'borrowed' ? 'scale-110' : 'grayscale opacity-70'} transition-all`}>💰</div>
+                                        <span className={`font-bold ${formData.type === 'borrowed' ? 'text-white' : 'text-gray-400'}`}>I Borrowed Money</span>
+                                        {formData.type === 'borrowed' && <div className="absolute top-3 right-3 w-3 h-3 bg-purple-500 rounded-full shadow-lg shadow-purple-500/50"></div>}
                                     </button>
                                 </div>
                             </div>
 
-                            {/* Contact Name */}
+                            <div className="h-px bg-gray-700/50 w-full"></div>
+
+                            {/* Contact Info */}
                             <div>
-                                <label className="block mb-2 font-semibold text-gray-300">
-                                    Contact Name <span className="text-red-400">*</span>
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    className="input bg-gray-900/50 border-gray-700 focus:border-blue-500"
-                                    placeholder="e.g. John Doe"
-                                    value={formData.contactName}
-                                    onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
-                                />
+                                <label className="block mb-4 font-semibold text-gray-300 text-sm uppercase tracking-wider">Contact Details</label>
+                                <div className="flex flex-col md:flex-row gap-6 items-start">
+                                    {/* Photo Upload */}
+                                    <div className="flex-shrink-0">
+                                        <div
+                                            className="w-24 h-24 rounded-full bg-gray-800 border-2 border-dashed border-gray-600 flex items-center justify-center cursor-pointer hover:border-blue-500 hover:bg-gray-800/80 transition-all relative overflow-hidden group"
+                                            onClick={() => fileInputRef.current?.click()}
+                                        >
+                                            {photoPreview ? (
+                                                <Image src={photoPreview} alt="Preview" fill className="object-cover" />
+                                            ) : (
+                                                <div className="text-center p-2">
+                                                    <span className="text-2xl block mb-1">📷</span>
+                                                    <span className="text-[10px] text-gray-400 uppercase font-bold">Add Photo</span>
+                                                </div>
+                                            )}
+                                            <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <span className="text-xs font-bold text-white">Change</span>
+                                            </div>
+                                        </div>
+                                        <input
+                                            type="file"
+                                            ref={fileInputRef}
+                                            className="hidden"
+                                            accept="image/*"
+                                            onChange={handlePhotoChange}
+                                        />
+                                    </div>
+
+                                    <div className="flex-grow space-y-4 w-full">
+                                        <div>
+                                            <label className="block mb-1.5 text-sm text-gray-400">Name <span className="text-red-400">*</span></label>
+                                            <input
+                                                type="text"
+                                                required
+                                                className="input w-full bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                                placeholder="e.g. John Doe"
+                                                value={formData.contactName}
+                                                onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
+                                            />
+                                        </div>
+                                        <div className="grid md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block mb-1.5 text-sm text-gray-400">Email (Optional)</label>
+                                                <input
+                                                    type="email"
+                                                    className="input w-full bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                                    placeholder="john@example.com"
+                                                    value={formData.contactEmail}
+                                                    onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block mb-1.5 text-sm text-gray-400">Phone (Optional)</label>
+                                                <input
+                                                    type="tel"
+                                                    className="input w-full bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                                    placeholder="+91 98765 43210"
+                                                    value={formData.contactPhone}
+                                                    onChange={(e) => setFormData({ ...formData, contactPhone: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            {/* Contact Details */}
-                            <div className="grid md:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block mb-2 font-semibold text-gray-300">Contact Email</label>
-                                    <input
-                                        type="email"
-                                        className="input bg-gray-900/50 border-gray-700 focus:border-blue-500"
-                                        placeholder="john@example.com"
-                                        value={formData.contactEmail}
-                                        onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block mb-2 font-semibold text-gray-300">Contact Phone</label>
-                                    <input
-                                        type="tel"
-                                        className="input bg-gray-900/50 border-gray-700 focus:border-blue-500"
-                                        placeholder="+1 234 567 8900"
-                                        value={formData.contactPhone}
-                                        onChange={(e) => setFormData({ ...formData, contactPhone: e.target.value })}
-                                    />
-                                </div>
-                            </div>
+                            <div className="h-px bg-gray-700/50 w-full"></div>
 
-                            {/* Amount and Currency */}
-                            <div className="grid md:grid-cols-3 gap-4">
-                                <div className="md:col-span-2">
-                                    <label className="block mb-2 font-semibold text-gray-300">
-                                        Amount <span className="text-red-400">*</span>
+                            {/* Financial Details */}
+                            <div>
+                                <label className="block mb-4 font-semibold text-gray-300 text-sm uppercase tracking-wider">Financial Details</label>
+                                <div className="grid md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label className="block mb-1.5 text-sm text-gray-400">Amount <span className="text-red-400">*</span></label>
+                                        <div className="relative">
+                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">₹</span>
+                                            <input
+                                                type="number"
+                                                required
+                                                min="0"
+                                                step="0.01"
+                                                className="input w-full pl-10 text-xl font-bold bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                                placeholder="0.00"
+                                                value={formData.amount}
+                                                onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block mb-1.5 text-sm text-gray-400">Due Date <span className="text-red-400">*</span></label>
+                                        <input
+                                            type="date"
+                                            required
+                                            className="input w-full bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                            value={formData.dueDate}
+                                            onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="mt-4">
+                                    <label className="block mb-1.5 text-sm text-gray-400 flex items-center gap-2">
+                                        Interest Rate (%)
+                                        <span className="bg-gradient-to-r from-yellow-600 to-yellow-400 text-black text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">PREMIUM</span>
                                     </label>
                                     <input
                                         type="number"
-                                        required
                                         min="0"
                                         step="0.01"
-                                        className="input text-lg font-bold bg-gray-900/50 border-gray-700 focus:border-blue-500"
-                                        placeholder="0.00"
-                                        value={formData.amount}
-                                        onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+                                        className="input w-full md:w-1/2 bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                        placeholder="e.g. 5.5"
+                                        value={formData.interestRate}
+                                        onChange={(e) => setFormData({ ...formData, interestRate: e.target.value })}
                                     />
                                 </div>
-                                <div>
-                                    <label className="block mb-2 font-semibold text-gray-300">Currency</label>
-                                    <select
-                                        className="input bg-gray-900/50 border-gray-700 focus:border-blue-500"
-                                        value={formData.currency}
-                                        onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
-                                    >
-                                        <option value="INR">INR (₹)</option>
-                                        <option value="USD">USD ($)</option>
-                                        <option value="EUR">EUR (€)</option>
-                                        <option value="GBP">GBP (£)</option>
-                                    </select>
-                                </div>
                             </div>
 
-                            {/* Due Date */}
-                            <div>
-                                <label className="block mb-2 font-semibold text-gray-300">
-                                    Due Date <span className="text-red-400">*</span>
-                                </label>
-                                <input
-                                    type="date"
-                                    required
-                                    className="input bg-gray-900/50 border-gray-700 focus:border-blue-500"
-                                    value={formData.dueDate}
-                                    onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-                                />
-                            </div>
-
-                            {/* Interest Rate (Premium Feature) */}
-                            <div>
-                                <label className="block mb-2 font-semibold text-gray-300 flex items-center gap-2">
-                                    Interest Rate (%)
-                                    <span className="badge-warning text-xs text-black font-bold px-2 py-0.5 rounded">PREMIUM</span>
-                                </label>
-                                <input
-                                    type="number"
-                                    min="0"
-                                    step="0.01"
-                                    className="input bg-gray-900/50 border-gray-700 focus:border-blue-500"
-                                    placeholder="e.g. 5.5"
-                                    value={formData.interestRate}
-                                    onChange={(e) => setFormData({ ...formData, interestRate: e.target.value })}
-                                />
-                            </div>
+                            <div className="h-px bg-gray-700/50 w-full"></div>
 
                             {/* Notes */}
                             <div>
-                                <label className="block mb-2 font-semibold text-gray-300">Notes</label>
+                                <label className="block mb-1.5 text-sm text-gray-400 font-semibold uppercase tracking-wider">Notes</label>
                                 <textarea
-                                    className="input min-h-24 resize-y bg-gray-900/50 border-gray-700 focus:border-blue-500"
-                                    placeholder="Add any additional details..."
+                                    className="input w-full min-h-24 resize-y bg-gray-900/50 border-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                                    placeholder="Add any additional details about this transaction..."
                                     value={formData.notes}
                                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                                 />
                             </div>
 
                             {/* Submit Button */}
-                            <div className="flex gap-4 pt-4">
+                            <div className="pt-4">
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="btn btn-primary flex-1 py-4 text-lg shadow-lg hover:shadow-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="btn btn-primary w-full py-4 text-lg font-bold shadow-xl hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                                 >
                                     {loading ? (
-                                        <span className="flex items-center gap-2">
-                                            <span className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
-                                            Saving...
+                                        <span className="flex items-center justify-center gap-2">
+                                            <span className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></span>
+                                            Saving Transaction...
                                         </span>
                                     ) : (
-                                        'Add Loan'
+                                        'Save Transaction'
                                     )}
                                 </button>
-                                <Link href="/dashboard" className="btn btn-ghost flex-1 hover:bg-gray-800">
-                                    Cancel
-                                </Link>
                             </div>
                         </form>
                     </div>
@@ -294,21 +339,21 @@ export default function NewLoanPage() {
                     {/* Sidebar / Preview */}
                     <div className="lg:col-span-1 space-y-6">
                         {/* Reminder Preview */}
-                        <div className="glass-card p-6 bg-gray-800/50 border-blue-500/20 animate-fadeIn" style={{ animationDelay: '200ms' }}>
-                            <h3 className="heading-sm mb-4 text-white flex items-center gap-2">
-                                <span>📱</span> Smart Reminder Preview
+                        <div className="glass-card p-6 bg-gray-800/40 border-blue-500/20 animate-fadeIn sticky top-24" style={{ animationDelay: '200ms' }}>
+                            <h3 className="heading-sm mb-4 text-white flex items-center gap-2 font-bold">
+                                <span>📱</span> Reminder Preview
                             </h3>
 
                             <div className="mb-4">
-                                <label className="text-xs text-gray-400 mb-2 block">Tone</label>
-                                <div className="flex gap-2 p-1 bg-gray-900 rounded-lg">
+                                <label className="text-xs text-gray-400 mb-2 block font-semibold uppercase">Tone</label>
+                                <div className="flex gap-2 p-1 bg-gray-900 rounded-lg border border-gray-700">
                                     {(['friendly', 'urgent', 'legal'] as const).map(tone => (
                                         <button
                                             key={tone}
                                             onClick={() => setReminderTone(tone)}
                                             className={`flex-1 py-1.5 text-xs font-medium rounded-md transition-all ${reminderTone === tone
-                                                    ? 'bg-blue-600 text-white shadow'
-                                                    : 'text-gray-400 hover:text-white'
+                                                ? 'bg-blue-600 text-white shadow-lg'
+                                                : 'text-gray-400 hover:text-white hover:bg-gray-800'
                                                 }`}
                                         >
                                             {tone.charAt(0).toUpperCase() + tone.slice(1)}
@@ -317,21 +362,23 @@ export default function NewLoanPage() {
                                 </div>
                             </div>
 
-                            <div className="bg-gray-900 p-4 rounded-xl border border-gray-700 relative">
+                            <div className="bg-gray-900 p-4 rounded-xl border border-gray-700 relative shadow-inner">
                                 <div className="absolute -right-2 top-4 w-4 h-4 bg-gray-900 border-l border-b border-gray-700 transform rotate-45"></div>
-                                <p className="text-sm text-gray-300 leading-relaxed">
+                                <p className="text-sm text-gray-300 leading-relaxed font-mono">
                                     {getReminderPreview()}
                                 </p>
                             </div>
 
-                            <p className="text-xs text-gray-500 mt-3 text-center">
-                                You can send this reminder after creating the loan.
+                            <p className="text-xs text-gray-500 mt-4 text-center">
+                                You can send this reminder via WhatsApp or Email after creating the loan.
                             </p>
                         </div>
 
                         {/* Pro Tip */}
                         <div className="glass-card p-6 bg-gradient-to-br from-blue-900/20 to-purple-900/20 border-blue-500/10 animate-fadeIn" style={{ animationDelay: '300ms' }}>
-                            <h3 className="heading-sm mb-2 text-blue-400">💡 Pro Tip</h3>
+                            <h3 className="heading-sm mb-2 text-blue-400 font-bold flex items-center gap-2">
+                                <span>💡</span> Pro Tip
+                            </h3>
                             <p className="text-sm text-gray-400">
                                 Adding an email or phone number allows you to send automated reminders directly from the app.
                             </p>
