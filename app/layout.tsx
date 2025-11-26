@@ -13,11 +13,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LendLedger - Premium Money Tracking & Reminders",
-  description: "Track loans, manage reminders, and never forget who owes you. Premium money management made simple.",
+  title: "LendLedger - Smart Money Tracking & Reminders",
+  description: "Track loans, manage reminders, and never forget who owes you. The smart way to manage personal lending.",
   manifest: "/manifest.json",
-  themeColor: "#ffd700",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+  icons: {
+    icon: "/assets/logo-promo.png",
+    apple: "/assets/logo-promo.png",
+  },
+};
+
+export const viewport = {
+  themeColor: "#1EA7FF",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
