@@ -37,7 +37,6 @@ export async function middleware(request: NextRequest) {
     const protectedRoutes = ['/dashboard', '/lend', '/borrow', '/transactions', '/loans'];
     const isProtectedRoute = protectedRoutes.some(route => request.nextUrl.pathname.startsWith(route));
     const isAuthRoute = request.nextUrl.pathname.startsWith('/auth') || request.nextUrl.pathname.startsWith('/login');
-    const isRoot = request.nextUrl.pathname === '/';
 
     // If not logged in and trying to access protected route, redirect to /auth
     if (!user && isProtectedRoute) {
@@ -49,14 +48,8 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/dashboard', request.url));
     }
 
-    // Root path handling
-    if (isRoot) {
-        if (user) {
-            return NextResponse.redirect(new URL('/dashboard', request.url));
-        } else {
-            return NextResponse.redirect(new URL('/auth', request.url));
-        }
-    }
+    // Allow public access to landing page (/)
+    // No redirect needed for root path
 
     return response;
 }
