@@ -114,14 +114,14 @@ export default function LandingPage() {
       </section>
 
       {/* Features Grid */}
-      <section className="py-28 relative">
+      <section className="py-28 relative bg-gradient-to-b from-black via-gray-900/30 to-black">
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <h2 className="heading-lg mb-6 text-white">Everything you need to manage loans in India</h2>
             <p className="text-gray-400 text-lg leading-relaxed">Track money lent to friends, manage shop credits, and never miss a payment again.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
             {[
               {
                 icon: '📝',
@@ -167,9 +167,9 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-24 bg-gradient-to-b from-black to-gray-900/50">
+      <section className="py-24 bg-gradient-to-b from-black via-gray-900/30 to-black">
         <div className="container">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="heading-lg mb-4 text-white">Trusted by thousands across India</h2>
             <p className="text-gray-400">See how LendLedger is helping Indians manage their finances better.</p>
           </div>
@@ -216,9 +216,9 @@ export default function LandingPage() {
       </section>
 
       {/* Comparison Section */}
-      <section className="py-24 bg-gradient-to-b from-black to-gray-900/50">
+      <section className="py-24 bg-gradient-to-b from-black via-gray-900/30 to-black">
         <div className="container">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="heading-lg mb-4 text-white">Why Choose LendLedger?</h2>
             <p className="text-gray-400">See how we compare to traditional methods.</p>
           </div>
@@ -255,9 +255,9 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-24 relative">
+      <section className="py-24 relative bg-gradient-to-b from-black via-gray-900/30 to-black">
         <div className="container">
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="heading-lg mb-4 text-white">Simple, Transparent Pricing</h2>
             <p className="text-gray-400 text-lg">Choose the plan that works for you. No hidden fees.</p>
           </div>
@@ -331,11 +331,13 @@ export default function LandingPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-gray-900/50 to-black">
+      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-black via-gray-900/30 to-black">
         <div className="container relative z-10">
-          <h2 className="heading-lg mb-12 text-center text-white">Frequently Asked Questions</h2>
+          <div className="text-center mb-12 max-w-3xl mx-auto">
+            <h2 className="heading-lg text-white">Frequently Asked Questions</h2>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto text-center md:text-left">
             {[
               {
                 q: 'How secure is my financial data?',
@@ -368,9 +370,9 @@ export default function LandingPage() {
       </section>
 
       {/* Final CTA Section */}
-      <section className="py-24 text-center relative overflow-hidden">
+      <section className="py-24 text-center relative overflow-hidden bg-gradient-to-b from-black via-gray-900/30 to-black">
         <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/20 to-transparent pointer-events-none"></div>
-        <div className="container relative z-10">
+        <div className="container relative z-10 max-w-4xl mx-auto">
           <h2 className="heading-xl mb-6 text-white">Ready to take control of your loans?</h2>
           <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
             Join thousands of users who trust LendLedger for tracking money lent to friends, managing shop credits, and never missing a payment.
