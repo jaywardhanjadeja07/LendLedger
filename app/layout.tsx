@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "LendLedger - Smart Money Tracking & Reminders",
-  description: "Track loans, manage reminders, and never forget who owes you. The smart way to manage personal lending.",
+  description: "LendLedger is the ultimate finance management and business ledger app. Track loans, manage shop credits, and send WhatsApp reminders. Start your free trial today.",
   manifest: "/manifest.json",
   icons: {
     icon: "/assets/logo-promo.png",

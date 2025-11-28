@@ -1,27 +1,28 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import Icons from './components/Icons';
 
 export default function LandingPage() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden selection:bg-indigo-500 selection:text-white">
-      {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-xl border-b border-white/10 py-4' : 'bg-transparent py-6'}`}>
-        <div className="container flex items-center justify-between">
+    <div className="min-h-screen bg-[var(--dark-bg)] text-white overflow-hidden font-sans selection:bg-indigo-500 selection:text-white">
+
+      {/* Navbar */}
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[var(--dark-bg)]/80 backdrop-blur-md border-b border-white/5 py-4' : 'bg-transparent py-6'}`}>
+        <div className="container-custom flex items-center justify-between">
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10 transition-transform group-hover:scale-110 duration-300">
+            <div className="relative w-10 h-10">
               <Image
                 src="/assets/logo.png"
                 alt="LendLedger Logo"
@@ -29,184 +30,228 @@ export default function LandingPage() {
                 className="object-contain"
               />
             </div>
-            <span className="text-2xl font-bold tracking-tight text-white group-hover:text-indigo-400 transition-colors">LendLedger</span>
+            <span className="text-2xl font-bold tracking-tight text-white">LendLedger</span>
           </Link>
 
-          <div className="flex items-center gap-6">
-            <Link href="/login" className="text-sm font-medium text-gray-300 hover:text-white transition-colors hidden sm:block">
-              Sign In
+          {/* Nav Links - Desktop */}
+          <div className="hidden md:flex items-center gap-8">
+            {['Home', 'Features', 'Pricing', 'About', 'FAQs'].map((item) => (
+              <Link key={item} href={`#${item.toLowerCase()}`} className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+                {item}
+              </Link>
+            ))}
+          </div>
+
+          {/* Auth Buttons */}
+          <div className="flex items-center gap-4">
+            <Link href="/login" className="hidden sm:block text-sm font-medium text-white hover:text-indigo-400 transition-colors">
+              Login
             </Link>
-            <Link href="/login" className="btn btn-primary shadow-neon">
-              Start Free
+            <Link href="/signup" className="btn btn-primary px-6 py-2 text-sm">
+              Start Now
             </Link>
           </div>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-24 lg:pt-44 lg:pb-32 overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl pointer-events-none">
-          <div className="absolute top-20 left-20 w-72 h-72 bg-indigo-600/20 rounded-full blur-[100px] animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-violet-600/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }}></div>
-        </div>
+      {/* Hero Section - Text Only, Centered, Min-Height */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center pt-[400px] pb-[300px] overflow-hidden">
+        <div className="bg-glow top-0 left-1/2 -translate-x-1/2 opacity-40"></div>
 
-        <div className="container relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="text-center lg:text-left animate-fadeIn space-y-6">
-              {/* SEO-Optimized H1 */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-                LendLedger – Loan tracking and reminder app for India
-              </h1>
+        <div className="container-custom relative z-10 flex flex-col items-center text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-16 animate-fade-in-up">
+            <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+            <span className="text-sm font-medium text-indigo-200">New: AI-Powered Credit Scoring</span>
+          </div>
 
-              {/* India-Specific Tagline */}
-              <p className="text-xl md:text-2xl text-gradient font-semibold">
-                Track loans, shop credits, and shared expenses in India with smart reminders
-              </p>
+          <h1 className="heading-xl mb-16 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            LendLedger
+          </h1>
 
-              <p className="text-lg text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Manage money you've lent or borrowed with <span className="text-white font-medium">WhatsApp reminders, UPI payment links, and legal loan agreements</span>. Built specifically for INR and Indian users.
-              </p>
+          <p className="heading-md text-gray-300 font-medium mb-20 max-w-3xl leading-tight animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+            You maintain your relationships healthy. <br className="hidden lg:block" />
+            <span className="text-primary-gradient">We track your transactions to make them healthier.</span>
+          </p>
 
-              {/* Primary CTAs */}
-              <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-4">
-                <Link href="/login" className="btn btn-primary w-full sm:w-auto text-lg px-10 py-4 shadow-xl hover:shadow-indigo-500/40">
-                  Start Free →
-                </Link>
-                <Link href="/dashboard" className="btn btn-secondary w-full sm:w-auto text-lg px-10 py-4">
-                  Open Web App
-                </Link>
-              </div>
-
-              {/* Trust Badges */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-gray-400 pt-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span>No credit card required</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span>Data securely stored</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-green-400">✓</span>
-                  <span>Built for INR & UPI</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Phone Mockup with App Banner */}
-            <div className="relative animate-float lg:h-[650px] flex items-center justify-center">
-              <div className="relative w-full max-w-md z-10">
-                <div className="absolute -inset-6 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-3xl blur-3xl opacity-25 animate-pulse"></div>
-                <Image
-                  src="/assets/phone-mockup.png"
-                  alt="LendLedger App - Coming Soon"
-                  width={500}
-                  height={650}
-                  className="relative z-10 drop-shadow-2xl"
-                  priority
-                />
-              </div>
-            </div>
+          <div className="flex flex-col sm:flex-row items-center gap-8 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            <Link href="/signup" className="btn btn-primary px-12 py-5 text-xl shadow-glow">
+              Start Free Trial
+            </Link>
+            <button className="btn btn-ghost px-12 py-5 text-xl flex items-center gap-3 group">
+              <span className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+              </span>
+              Watch Demo
+            </button>
           </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section className="py-28 relative bg-gradient-to-b from-black via-gray-900/30 to-black">
-        <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <h2 className="heading-lg mb-6 text-white">Everything you need to manage loans in India</h2>
-            <p className="text-gray-400 text-lg leading-relaxed">Track money lent to friends, manage shop credits, and never miss a payment again.</p>
+      {/* Features Section */}
+      <section id="features" className="py-[400px] relative bg-[var(--dark-bg)]">
+        <div className="container-custom">
+          <div className="text-center w-full max-w-5xl mx-auto mb-64">
+            <h2 className="heading-lg mb-16">Powerful Features</h2>
+            <p className="text-base text-gray-400">Everything you need to manage your lending business efficiently.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 justify-items-center">
             {[
-              {
-                icon: '📝',
-                title: 'Instant Loan Records',
-                desc: 'Record transactions in seconds with date, amount, borrower details, and digital proof. Never lose track of who owes you money.'
-              },
-              {
-                icon: '💬',
-                title: 'One-Tap WhatsApp Reminders',
-                desc: 'Send friendly payment reminders directly via WhatsApp. Choose between friendly, urgent, or legal tones for maximum effectiveness.'
-              },
-              {
-                icon: '📄',
-                title: 'Legal Loan Agreements',
-                desc: 'Generate and download legally valid loan agreements in seconds. Protect yourself with proper documentation for every transaction.'
-              },
-              {
-                icon: '💸',
-                title: 'UPI Payment Links',
-                desc: 'Share instant UPI payment links for easy collection. Your borrowers can pay you directly with a single tap—no account details needed.'
-              },
-              {
-                icon: '⭐',
-                title: 'Borrower Reliability Score',
-                desc: 'Track payment history and borrower trustworthiness over time. Make informed decisions about future lending based on data.'
-              },
-              {
-                icon: '☁️',
-                title: 'Cloud Sync & Security',
-                desc: 'Bank-grade encryption with real-time multi-device sync. Your data is safe, encrypted, and accessible from anywhere.'
-              },
+              { title: "AI-Powered Lending", desc: "Smart credit scoring and risk assessment.", icon: Icons.Zap },
+              { title: "Instant Payments", desc: "Seamless UPI and bank transfers.", icon: Icons.Wallet },
+              { title: "Smart Notifications", desc: "Automated WhatsApp reminders.", icon: Icons.Bell },
+              { title: "Secure Dashboard", desc: "Bank-grade security for your data.", icon: Icons.Shield }
             ].map((feature, i) => (
-              <div key={i} className="glass-card p-8 group hover:bg-white/5 transition-all duration-300">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-4xl mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-indigo-500/20">
-                  {feature.icon}
+              <div key={i} className="glass-card p-12 flex flex-col items-center text-center group hover:bg-white/5 transition-colors w-full">
+                <div className="w-20 h-20 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-12 group-hover:scale-110 transition-transform shadow-glow">
+                  <feature.icon className="w-10 h-10" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-indigo-400 transition-colors">{feature.title}</h3>
-                <p className="text-gray-400 leading-relaxed text-base">{feature.desc}</p>
+                <h3 className="text-xl font-bold mb-6">{feature.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-24 bg-gradient-to-b from-black via-gray-900/30 to-black">
-        <div className="container">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="heading-lg mb-4 text-white">Trusted by thousands across India</h2>
-            <p className="text-gray-400">See how LendLedger is helping Indians manage their finances better.</p>
+      {/* How It Works */}
+      <section className="py-[400px] bg-white/[0.02] relative overflow-hidden">
+        <div className="container-custom">
+          <div className="text-center mb-64">
+            <h2 className="heading-lg mb-16">How It Works</h2>
+            <p className="text-base text-gray-400">Get started in 3 simple steps.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="relative grid grid-cols-1 md:grid-cols-3 gap-20">
+            {/* Connecting Line */}
+            <div className="hidden md:block absolute top-20 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent"></div>
+
             {[
-              {
-                quote: "LendLedger helped me track ₹2.5 lakhs in shop credits effortlessly. WhatsApp reminders ensure timely payments.",
-                name: "Rajesh Kumar",
-                role: "Small Business Owner",
-                avatar: "👨‍💼"
-              },
-              {
-                quote: "As a freelancer, managing multiple clients and payments was chaos. LendLedger brought clarity and professionalism.",
-                name: "Priya Sharma",
-                role: "Freelance Designer",
-                avatar: "👩‍💻"
-              },
-              {
-                quote: "Perfect for tracking money lent to friends. The app is simple, secure, and the reminders actually work!",
-                name: "Arjun Patel",
-                role: "College Student",
-                avatar: "👨‍🎓"
-              }
-            ].map((testimonial, i) => (
-              <div key={i} className="glass-card p-8 hover:border-indigo-500/30 transition-all">
-                <div className="mb-6">
-                  <div className="text-indigo-400 text-4xl mb-4">"</div>
-                  <p className="text-gray-300 text-lg leading-relaxed italic">{testimonial.quote}</p>
+              { step: "01", title: "Create Account", desc: "Sign up in seconds." },
+              { step: "02", title: "Add Borrowers", desc: "Input borrower details." },
+              { step: "03", title: "Track Repayments", desc: "Get paid on time." }
+            ].map((item, i) => (
+              <div key={i} className="relative flex flex-col items-center text-center z-10">
+                <div className="w-40 h-40 rounded-full bg-[var(--dark-bg)] border-4 border-indigo-500/20 flex items-center justify-center text-3xl font-bold text-indigo-400 mb-12 shadow-glow group hover:border-indigo-500/50 transition-colors">
+                  {item.step}
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center text-2xl shadow-lg">
-                    {testimonial.avatar}
+                <h3 className="text-xl font-bold mb-6">{item.title}</h3>
+                <p className="text-gray-400 text-sm">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* App Interface Showcase */}
+      <section className="py-[400px] relative overflow-hidden">
+        <div className="container-custom">
+          <div className="text-center mb-64">
+            <h2 className="heading-lg mb-16">Experience the App</h2>
+            <p className="text-base text-gray-400">Beautiful, intuitive, and powerful.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 items-center justify-center max-w-7xl mx-auto">
+            <div className="transform translate-y-16 hover:-translate-y-4 transition-transform duration-500">
+              <Image src="/assets/emi.png" alt="EMI Tracker" width={400} height={800} className="w-full h-auto drop-shadow-2xl rounded-3xl border border-white/10" />
+            </div>
+            <div className="transform z-10 hover:-translate-y-6 transition-transform duration-500 scale-110">
+              <Image src="/assets/dashboard.png" alt="Dashboard" width={400} height={800} className="w-full h-auto drop-shadow-2xl rounded-3xl shadow-glow border border-white/10" />
+            </div>
+            <div className="transform translate-y-16 hover:-translate-y-4 transition-transform duration-500">
+              <Image src="/assets/profile.png" alt="Profile" width={400} height={800} className="w-full h-auto drop-shadow-2xl rounded-3xl border border-white/10" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section id="pricing" className="py-[400px]">
+        <div className="container-custom">
+          <div className="text-center mb-64">
+            <h2 className="heading-lg mb-16">Simple Pricing</h2>
+            <p className="text-base text-gray-400">Choose the plan that fits your needs.</p>
+
+            {/* Toggle Placeholder */}
+            <div className="inline-flex bg-white/5 rounded-full p-1 mt-20 border border-white/10">
+              <button className="px-10 py-4 rounded-full bg-indigo-600 text-white text-base font-bold shadow-lg">Monthly</button>
+              <button className="px-10 py-4 rounded-full text-gray-400 text-base font-bold hover:text-white transition-colors">Yearly</button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto items-start">
+            {/* Starter */}
+            <div className="glass-card p-12 text-center hover:bg-white/5 transition-colors">
+              <h3 className="text-xl font-bold mb-6">Starter</h3>
+              <div className="text-4xl font-bold mb-10">Free</div>
+              <p className="text-sm text-gray-400 mb-12">Perfect for individuals just starting out.</p>
+              <ul className="space-y-6 mb-16 text-left text-gray-300 text-sm">
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-500 w-5 h-5 flex-shrink-0" /> Up to 50 Active Loans</li>
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-500 w-5 h-5 flex-shrink-0" /> Basic Repayment Tracking</li>
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-500 w-5 h-5 flex-shrink-0" /> Email Support</li>
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-500 w-5 h-5 flex-shrink-0" /> Single User</li>
+              </ul>
+              <button className="btn btn-outline w-full py-5 text-lg">Get Started</button>
+            </div>
+
+            {/* Pro */}
+            <div className="glass-card p-14 text-center border-indigo-500/50 bg-indigo-900/10 relative transform md:-translate-y-8 z-10">
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-indigo-500 text-white px-8 py-3 rounded-full text-sm font-bold uppercase tracking-wider shadow-lg">Most Popular</div>
+              <h3 className="text-2xl font-bold mb-6">Pro</h3>
+              <div className="text-5xl font-bold mb-10">₹79<span className="text-lg text-gray-400 font-normal">/mo</span></div>
+              <p className="text-sm text-gray-300 mb-12">For growing businesses needing more power.</p>
+              <ul className="space-y-6 mb-16 text-left text-gray-200 text-sm">
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-400 w-6 h-6 flex-shrink-0" /> Unlimited Loans</li>
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-400 w-6 h-6 flex-shrink-0" /> Automated WhatsApp Reminders</li>
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-400 w-6 h-6 flex-shrink-0" /> Advanced Analytics & Reports</li>
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-400 w-6 h-6 flex-shrink-0" /> Priority Chat Support</li>
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-400 w-6 h-6 flex-shrink-0" /> Up to 3 Users</li>
+              </ul>
+              <button className="btn btn-primary w-full py-5 text-xl shadow-glow">Start Free Trial</button>
+            </div>
+
+            {/* Enterprise Edition */}
+            <div className="glass-card p-12 text-center hover:bg-white/5 transition-colors">
+              <h3 className="text-xl font-bold mb-6">Enterprise</h3>
+              <div className="text-4xl font-bold mb-10">₹499<span className="text-lg text-gray-400 font-normal">/mo</span></div>
+              <p className="text-sm text-gray-400 mb-12">Full control for large scale operations.</p>
+              <ul className="space-y-6 mb-16 text-left text-gray-300 text-sm">
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-500 w-5 h-5 flex-shrink-0" /> Everything in Pro</li>
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-500 w-5 h-5 flex-shrink-0" /> Custom API Access</li>
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-500 w-5 h-5 flex-shrink-0" /> Dedicated Account Manager</li>
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-500 w-5 h-5 flex-shrink-0" /> Custom Branding</li>
+                <li className="flex gap-4 items-center"><Icons.Check className="text-indigo-500 w-5 h-5 flex-shrink-0" /> Unlimited Users</li>
+              </ul>
+              <button className="btn btn-outline w-full py-5 text-lg">Contact Sales</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-[400px] bg-white/[0.02]">
+        <div className="container-custom">
+          <div className="text-center mb-64">
+            <h2 className="heading-lg mb-16">Trusted by Thousands</h2>
+            <p className="text-base text-gray-400">See what our users are saying.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
+            {[
+              { name: "Rahul Sharma", role: "Business Owner", quote: "LendLedger transformed how I manage my shop credits. Highly recommended!" },
+              { name: "Priya Patel", role: "Freelancer", quote: "The automated reminders are a game changer. I get paid on time now." },
+              { name: "Amit Verma", role: "Investor", quote: "Clean, fast, and secure. Exactly what I needed for my personal lending." }
+            ].map((t, i) => (
+              <div key={i} className="glass-card p-12 flex flex-col hover:-translate-y-2 transition-transform">
+                <Icons.Quote className="w-12 h-12 text-indigo-500 mb-12 opacity-50" />
+                <p className="text-gray-300 mb-12 italic flex-grow text-lg">"{t.quote}"</p>
+                <div className="flex items-center gap-5">
+                  <div className="w-14 h-14 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-xl">
+                    {t.name[0]}
                   </div>
                   <div>
-                    <div className="font-bold text-white">{testimonial.name}</div>
-                    <div className="text-sm text-gray-400">{testimonial.role}</div>
+                    <div className="font-bold text-white text-lg">{t.name}</div>
+                    <div className="text-sm text-gray-500">{t.role}</div>
                   </div>
                 </div>
               </div>
@@ -215,194 +260,56 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Comparison Section */}
-      <section className="py-24 bg-gradient-to-b from-black via-gray-900/30 to-black">
-        <div className="container">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="heading-lg mb-4 text-white">Why Choose LendLedger?</h2>
-            <p className="text-gray-400">See how we compare to traditional methods.</p>
-          </div>
-
-          <div className="max-w-4xl mx-auto glass-card p-8 md:p-12 overflow-hidden relative">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></div>
-
-            <div className="grid grid-cols-3 gap-4 md:gap-8 text-center border-b border-white/10 pb-6 mb-6">
-              <div className="text-gray-500 font-semibold uppercase tracking-wider text-xs md:text-sm">Feature</div>
-              <div className="text-gray-500 font-semibold uppercase tracking-wider text-xs md:text-sm">Traditional Apps</div>
-              <div className="text-indigo-400 font-bold uppercase tracking-wider text-xs md:text-sm">LendLedger</div>
-            </div>
-
-            <div className="space-y-6">
-              {[
-                { name: 'Data Security', old: 'Local Storage', new: 'Encrypted Cloud' },
-                { name: 'Reminders', old: 'Manual', new: 'Automated Smart Alerts' },
-                { name: 'Interface', old: 'Cluttered', new: 'Clean & Premium' },
-                { name: 'Sync', old: 'None', new: 'Real-time Multi-device' },
-                { name: 'Cost', old: 'Hidden Fees', new: 'Transparent / Free Tier' },
-              ].map((row, i) => (
-                <div key={i} className="grid grid-cols-3 gap-4 md:gap-8 items-center text-center group">
-                  <div className="text-left font-medium text-gray-300">{row.name}</div>
-                  <div className="text-gray-500 text-sm">{row.old}</div>
-                  <div className="text-white font-bold text-lg group-hover:text-indigo-400 transition-colors flex items-center justify-center gap-2">
-                    {row.new}
-                    <span className="text-green-500 text-xs">✓</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section className="py-24 relative bg-gradient-to-b from-black via-gray-900/30 to-black">
-        <div className="container">
-          <div className="text-center mb-16 max-w-3xl mx-auto">
-            <h2 className="heading-lg mb-4 text-white">Simple, Transparent Pricing</h2>
-            <p className="text-gray-400 text-lg">Choose the plan that works for you. No hidden fees.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Personal Plan */}
-            <div className="glass-card p-10 hover:border-indigo-500/30 transition-all">
-              <h3 className="text-2xl font-bold text-white mb-2">Personal</h3>
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-white">Free</span>
-                <span className="text-gray-400"> forever</span>
-              </div>
-              <p className="text-gray-400 mb-8">Perfect for individuals tracking personal loans and expenses.</p>
-
-              <ul className="space-y-4 mb-8">
-                {[
-                  'Up to 50 active loans',
-                  'Basic WhatsApp reminders',
-                  '5 loan agreements/month',
-                  'Basic analytics',
-                  'Cloud sync'
-                ].map((feature, i) => (
-                  <li key={i} className="flex items-center gap-3 text-gray-300">
-                    <span className="text-green-400">✓</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <Link href="/login" className="btn btn-secondary w-full text-lg py-3">
-                Choose Personal
-              </Link>
-            </div>
-
-            {/* Business Plan */}
-            <div className="glass-card p-10 border-2 border-indigo-500/50 relative hover:border-indigo-500 transition-all shadow-neon">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-600 to-violet-600 text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">
-                Most Popular
-              </div>
-
-              <h3 className="text-2xl font-bold text-white mb-2">Business</h3>
-              <div className="mb-6">
-                <span className="text-4xl font-bold text-white">₹79</span>
-                <span className="text-gray-400">/month</span>
-              </div>
-              <p className="text-gray-400 mb-8">For power users, freelancers, and businesses managing multiple loans.</p>
-
-              <ul className="space-y-4 mb-8">
-                {[
-                  'Unlimited loans',
-                  'WhatsApp + Email + SMS reminders',
-                  'Unlimited loan agreements',
-                  'Advanced analytics & reports',
-                  'Multi-user access',
-                  'Priority support',
-                  'Custom branding'
-                ].map((feature, i) => (
-                  <li key={i} className="flex items-center gap-3 text-gray-300">
-                    <span className="text-green-400">✓</span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <Link href="/login" className="btn btn-primary w-full text-lg py-3 shadow-xl">
-                Choose Business
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-24 relative overflow-hidden bg-gradient-to-b from-black via-gray-900/30 to-black">
-        <div className="container relative z-10">
-          <div className="text-center mb-12 max-w-3xl mx-auto">
-            <h2 className="heading-lg text-white">Frequently Asked Questions</h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto text-center md:text-left">
-            {[
-              {
-                q: 'How secure is my financial data?',
-                a: 'We use bank-grade AES-256 encryption to protect your data. All information is stored securely in the cloud with Supabase, and we never share your data with third parties. Your privacy and security are our top priorities.'
-              },
-              {
-                q: 'Can I track money lent to friends and family?',
-                a: 'Absolutely! LendLedger is perfect for tracking money lent to friends, managing shop credits, shared expenses with roommates, or any personal lending. Record transactions instantly and send friendly WhatsApp reminders when payments are due.'
-              },
-              {
-                q: 'Does LendLedger support INR and UPI?',
-                a: 'Yes, LendLedger is built specifically for India! We support INR currency with proper Indian numbering (e.g., ₹1,20,000), UPI payment link generation for easy collection, and WhatsApp integration for reminders—all tailored for Indian users.'
-              },
-              {
-                q: 'How do WhatsApp reminders work?',
-                a: 'You can send automated payment reminders via WhatsApp with a single tap. Choose between friendly, urgent, or legal tones depending on the situation. The app generates a pre-filled message you can customize before sending.'
-              },
-              {
-                q: 'Is there a free plan?',
-                a: 'Yes! Our Personal plan is free forever and includes up to 50 active loans, basic WhatsApp reminders, 5 loan agreements per month, and cloud sync. Perfect for individuals managing personal finances. Upgrade to Business (₹79/month) for unlimited loans and advanced features.'
-              },
-            ].map((faq, i) => (
-              <div key={i} className="glass-card p-8 hover:border-indigo-500/30 transition-colors">
-                <h3 className="text-lg font-bold text-white mb-3">{faq.q}</h3>
-                <p className="text-gray-400 leading-relaxed">{faq.a}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA Section */}
-      <section className="py-24 text-center relative overflow-hidden bg-gradient-to-b from-black via-gray-900/30 to-black">
-        <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/20 to-transparent pointer-events-none"></div>
-        <div className="container relative z-10 max-w-4xl mx-auto">
-          <h2 className="heading-xl mb-6 text-white">Ready to take control of your loans?</h2>
-          <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-            Join thousands of users who trust LendLedger for tracking money lent to friends, managing shop credits, and never missing a payment.
+      {/* CTA Block */}
+      <section className="py-[400px] relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/40 to-purple-900/40"></div>
+        <div className="container-custom relative z-10 flex flex-col items-center text-center">
+          <h2 className="heading-lg mb-16">Ready to Simplify Lending?</h2>
+          <p className="text-xl text-gray-300 mb-20 max-w-3xl mx-auto">
+            Join thousands of users who are growing their business with LendLedger.
           </p>
-          <Link href="/login" className="btn btn-primary text-lg px-10 py-5 shadow-neon hover:scale-105 transition-transform">
-            Start Free →
+          <Link href="/signup" className="btn btn-primary px-16 py-6 text-xl shadow-glow hover:scale-105 transition-transform">
+            Start Now
           </Link>
-          <p className="mt-6 text-sm text-gray-500">No credit card required • Free forever plan available</p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 bg-black py-12">
-        <div className="container">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity">
-              <div className="w-8 h-8 relative">
+      <footer className="bg-black py-24 border-t border-white/5">
+        <div className="container-custom grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+          <div className="col-span-1 md:col-span-1 flex flex-col items-center md:items-start">
+            <Link href="/" className="flex items-center gap-2 mb-8">
+              <div className="relative w-10 h-10">
                 <Image src="/assets/logo.png" alt="Logo" fill className="object-contain" />
               </div>
-              <span className="text-xl font-bold text-white">LendLedger</span>
-            </div>
-            <div className="text-gray-500 text-sm">
-              © {new Date().getFullYear()} LendLedger. All rights reserved.
-            </div>
-            <div className="flex gap-6">
-              <a href="#" className="text-gray-500 hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="text-gray-500 hover:text-white transition-colors">Terms</a>
-              <a href="#" className="text-gray-500 hover:text-white transition-colors">Contact</a>
-            </div>
+              <span className="text-2xl font-bold text-white">LendLedger</span>
+            </Link>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              The smartest way to track loans and manage repayments. Secure, fast, and reliable.
+            </p>
           </div>
+
+          {[
+            { title: "Product", links: ["Features", "Pricing", "Security", "Updates"] },
+            { title: "Company", links: ["About", "Careers", "Blog", "Contact"] },
+            { title: "Legal", links: ["Privacy Policy", "Terms of Service", "Cookie Policy"] }
+          ].map((col, i) => (
+            <div key={i} className="flex flex-col items-center md:items-start">
+              <h4 className="font-bold text-white mb-8 text-lg">{col.title}</h4>
+              <ul className="space-y-4">
+                {col.links.map((link) => (
+                  <li key={link}>
+                    <Link href="#" className="text-gray-500 hover:text-indigo-400 text-sm transition-colors">
+                      {link}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div className="container-custom mt-24 pt-8 border-t border-white/5 text-center text-gray-600 text-sm">
+          &copy; {new Date().getFullYear()} LendLedger. All Rights Reserved.
         </div>
       </footer>
     </div>
