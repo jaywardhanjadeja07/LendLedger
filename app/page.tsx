@@ -88,19 +88,23 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-[400px] relative bg-[var(--dark-bg)]">
+      <section id="features" className="py-[1000px] relative bg-[var(--dark-bg)]">
         <div className="container-custom">
-          <div className="text-center w-full max-w-5xl mx-auto mb-64">
-            <h2 className="heading-lg mb-24">Powerful Features</h2>
-            <p className="text-base text-gray-400">Everything you need to manage your lending business efficiently.</p>
+          <div className="text-center w-full max-w-5xl mx-auto mb-[200px]">
+            <h2 className="heading-lg mb-24">Keep Relationships Healthy</h2>
+            <p className="text-base text-gray-400">Tools designed to maintain trust and transparency in every transaction.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 justify-items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 justify-items-center max-w-7xl mx-auto">
             {[
-              { title: "AI-Powered Lending", desc: "Smart credit scoring and risk assessment.", icon: Icons.Zap },
-              { title: "Instant Payments", desc: "Seamless UPI and bank transfers.", icon: Icons.Wallet },
-              { title: "Smart Notifications", desc: "Automated WhatsApp reminders.", icon: Icons.Bell },
-              { title: "Secure Dashboard", desc: "Bank-grade security for your data.", icon: Icons.Shield }
+              { title: "Relationship Health Score", desc: "Visual indicator of lending relationship strength and trust.", icon: Icons.Chart },
+              { title: "Flexible Repayment Plans", desc: "Customize payment schedules to maintain mutual comfort.", icon: Icons.Document },
+              { title: "Transaction Transparency", desc: "Complete history visible to both parties for clarity.", icon: Icons.Shield },
+              { title: "Friendly Reminders", desc: "Customizable tone for payment reminders that preserve relationships.", icon: Icons.Bell },
+              { title: "Milestone Celebrations", desc: "Recognize and celebrate debt-free achievements together.", icon: Icons.Star },
+              { title: "Privacy Controls", desc: "Choose what information to share and with whom.", icon: Icons.Lock },
+              { title: "Instant Payments", desc: "Seamless UPI and bank transfers for quick settlements.", icon: Icons.Wallet },
+              { title: "Smart Notifications", desc: "Automated WhatsApp reminders that feel personal.", icon: Icons.Zap }
             ].map((feature, i) => (
               <div key={i} className="glass-card p-12 flex flex-col items-center text-center group hover:bg-white/5 transition-colors w-full">
                 <div className="w-20 h-20 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-12 group-hover:scale-110 transition-transform shadow-glow">
@@ -115,9 +119,9 @@ export default function LandingPage() {
       </section>
 
       {/* Security Section - NEW */}
-      <section className="py-[400px] relative overflow-hidden">
+      <section className="py-[1000px] relative overflow-hidden">
         <div className="container-custom">
-          <div className="text-center w-full max-w-5xl mx-auto mb-64">
+          <div className="text-center w-full max-w-5xl mx-auto mb-[200px]">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 backdrop-blur-md mb-8">
               <Icons.Shield className="w-4 h-4 text-green-400" />
               <span className="text-sm font-medium text-green-200">Bank-Grade Security</span>
@@ -145,9 +149,9 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-[400px] bg-white/[0.02] relative overflow-hidden">
+      <section className="py-[1000px] bg-white/[0.02] relative overflow-hidden">
         <div className="container-custom">
-          <div className="text-center mb-64">
+          <div className="text-center mb-[200px]">
             <h2 className="heading-lg mb-24">How It Works</h2>
             <p className="text-base text-gray-400">Get started in 3 simple steps.</p>
           </div>
@@ -174,9 +178,9 @@ export default function LandingPage() {
       </section>
 
       {/* App Interface Showcase */}
-      <section className="py-[400px] relative overflow-hidden">
+      <section className="py-[1000px] relative overflow-hidden">
         <div className="container-custom">
-          <div className="text-center mb-64">
+          <div className="text-center mb-[200px]">
             <h2 className="heading-lg mb-24">Experience the App</h2>
             <p className="text-base text-gray-400">Beautiful, intuitive, and powerful.</p>
           </div>
@@ -196,9 +200,9 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-[400px]">
+      <section id="pricing" className="py-[1000px]">
         <div className="container-custom">
-          <div className="text-center mb-64">
+          <div className="text-center mb-[200px]">
             <h2 className="heading-lg mb-24">Simple Pricing</h2>
             <p className="text-base text-gray-400">Choose the plan that fits your needs.</p>
 
@@ -259,9 +263,9 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-[400px] bg-white/[0.02]">
+      <section className="py-[1000px] bg-white/[0.02]">
         <div className="container-custom">
-          <div className="text-center mb-64">
+          <div className="text-center mb-[200px]">
             <h2 className="heading-lg mb-24">Trusted by Thousands</h2>
             <p className="text-base text-gray-400">See what our users are saying.</p>
           </div>
@@ -296,7 +300,7 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Block */}
-      <section className="py-[400px] relative overflow-hidden">
+      <section className="py-[1000px] relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/40 to-purple-900/40"></div>
         <div className="container-custom relative z-10 flex flex-col items-center text-center">
           <h2 className="heading-lg mb-24">Ready to Simplify Lending?</h2>
