@@ -64,11 +64,11 @@ export default function LandingPage() {
             <span className="text-sm font-medium text-indigo-200">New: AI-Powered Credit Scoring</span>
           </div>
 
-          <h1 className="heading-xl mb-16 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+          <h1 className="heading-xl mb-24 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             LendLedger
           </h1>
 
-          <p className="heading-md text-gray-300 font-medium mb-20 max-w-3xl leading-tight animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
+          <p className="heading-md text-gray-300 font-medium mb-24 max-w-3xl leading-tight animate-fade-in-up" style={{ animationDelay: '0.15s' }}>
             You maintain your relationships healthy. <br className="hidden lg:block" />
             <span className="text-primary-gradient">We track your transactions to make them healthier.</span>
           </p>
@@ -91,7 +91,7 @@ export default function LandingPage() {
       <section id="features" className="py-[400px] relative bg-[var(--dark-bg)]">
         <div className="container-custom">
           <div className="text-center w-full max-w-5xl mx-auto mb-64">
-            <h2 className="heading-lg mb-16">Powerful Features</h2>
+            <h2 className="heading-lg mb-24">Powerful Features</h2>
             <p className="text-base text-gray-400">Everything you need to manage your lending business efficiently.</p>
           </div>
 
@@ -106,8 +106,38 @@ export default function LandingPage() {
                 <div className="w-20 h-20 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-12 group-hover:scale-110 transition-transform shadow-glow">
                   <feature.icon className="w-10 h-10" />
                 </div>
-                <h3 className="text-xl font-bold mb-6">{feature.title}</h3>
+                <h3 className="text-xl font-bold mb-12">{feature.title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Security Section - NEW */}
+      <section className="py-[400px] relative overflow-hidden">
+        <div className="container-custom">
+          <div className="text-center w-full max-w-5xl mx-auto mb-64">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 backdrop-blur-md mb-8">
+              <Icons.Shield className="w-4 h-4 text-green-400" />
+              <span className="text-sm font-medium text-green-200">Bank-Grade Security</span>
+            </div>
+            <h2 className="heading-lg mb-24">Your Data is Safe with Us</h2>
+            <p className="text-base text-gray-400">We use state-of-the-art encryption to ensure your financial data remains private and secure.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+            {[
+              { title: "256-bit Encryption", desc: "Military-grade encryption for all your data transactions.", icon: Icons.Lock },
+              { title: "ISO 27001 Certified", desc: "Compliant with international information security standards.", icon: Icons.Shield },
+              { title: "Data Privacy", desc: "We never sell your data. Your privacy is our top priority.", icon: Icons.Server }
+            ].map((item, i) => (
+              <div key={i} className="glass-card p-12 flex flex-col items-center text-center border-green-500/20 hover:border-green-500/40 transition-colors">
+                <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center text-green-400 mb-10">
+                  <item.icon className="w-10 h-10" />
+                </div>
+                <h3 className="text-xl font-bold mb-12">{item.title}</h3>
+                <p className="text-gray-400 text-sm">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -118,7 +148,7 @@ export default function LandingPage() {
       <section className="py-[400px] bg-white/[0.02] relative overflow-hidden">
         <div className="container-custom">
           <div className="text-center mb-64">
-            <h2 className="heading-lg mb-16">How It Works</h2>
+            <h2 className="heading-lg mb-24">How It Works</h2>
             <p className="text-base text-gray-400">Get started in 3 simple steps.</p>
           </div>
 
@@ -135,7 +165,7 @@ export default function LandingPage() {
                 <div className="w-40 h-40 rounded-full bg-[var(--dark-bg)] border-4 border-indigo-500/20 flex items-center justify-center text-3xl font-bold text-indigo-400 mb-12 shadow-glow group hover:border-indigo-500/50 transition-colors">
                   {item.step}
                 </div>
-                <h3 className="text-xl font-bold mb-6">{item.title}</h3>
+                <h3 className="text-xl font-bold mb-12">{item.title}</h3>
                 <p className="text-gray-400 text-sm">{item.desc}</p>
               </div>
             ))}
@@ -147,7 +177,7 @@ export default function LandingPage() {
       <section className="py-[400px] relative overflow-hidden">
         <div className="container-custom">
           <div className="text-center mb-64">
-            <h2 className="heading-lg mb-16">Experience the App</h2>
+            <h2 className="heading-lg mb-24">Experience the App</h2>
             <p className="text-base text-gray-400">Beautiful, intuitive, and powerful.</p>
           </div>
 
@@ -169,7 +199,7 @@ export default function LandingPage() {
       <section id="pricing" className="py-[400px]">
         <div className="container-custom">
           <div className="text-center mb-64">
-            <h2 className="heading-lg mb-16">Simple Pricing</h2>
+            <h2 className="heading-lg mb-24">Simple Pricing</h2>
             <p className="text-base text-gray-400">Choose the plan that fits your needs.</p>
 
             {/* Toggle Placeholder */}
@@ -182,7 +212,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto items-start">
             {/* Starter */}
             <div className="glass-card p-12 text-center hover:bg-white/5 transition-colors">
-              <h3 className="text-xl font-bold mb-6">Starter</h3>
+              <h3 className="text-xl font-bold mb-12">Starter</h3>
               <div className="text-4xl font-bold mb-10">Free</div>
               <p className="text-sm text-gray-400 mb-12">Perfect for individuals just starting out.</p>
               <ul className="space-y-6 mb-16 text-left text-gray-300 text-sm">
@@ -197,7 +227,7 @@ export default function LandingPage() {
             {/* Pro */}
             <div className="glass-card p-14 text-center border-indigo-500/50 bg-indigo-900/10 relative transform md:-translate-y-8 z-10">
               <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-indigo-500 text-white px-8 py-3 rounded-full text-sm font-bold uppercase tracking-wider shadow-lg">Most Popular</div>
-              <h3 className="text-2xl font-bold mb-6">Pro</h3>
+              <h3 className="text-2xl font-bold mb-12">Pro</h3>
               <div className="text-5xl font-bold mb-10">₹79<span className="text-lg text-gray-400 font-normal">/mo</span></div>
               <p className="text-sm text-gray-300 mb-12">For growing businesses needing more power.</p>
               <ul className="space-y-6 mb-16 text-left text-gray-200 text-sm">
@@ -212,7 +242,7 @@ export default function LandingPage() {
 
             {/* Enterprise Edition */}
             <div className="glass-card p-12 text-center hover:bg-white/5 transition-colors">
-              <h3 className="text-xl font-bold mb-6">Enterprise</h3>
+              <h3 className="text-xl font-bold mb-12">Enterprise</h3>
               <div className="text-4xl font-bold mb-10">₹499<span className="text-lg text-gray-400 font-normal">/mo</span></div>
               <p className="text-sm text-gray-400 mb-12">Full control for large scale operations.</p>
               <ul className="space-y-6 mb-16 text-left text-gray-300 text-sm">
@@ -232,7 +262,7 @@ export default function LandingPage() {
       <section className="py-[400px] bg-white/[0.02]">
         <div className="container-custom">
           <div className="text-center mb-64">
-            <h2 className="heading-lg mb-16">Trusted by Thousands</h2>
+            <h2 className="heading-lg mb-24">Trusted by Thousands</h2>
             <p className="text-base text-gray-400">See what our users are saying.</p>
           </div>
 
@@ -250,8 +280,13 @@ export default function LandingPage() {
                     {t.name[0]}
                   </div>
                   <div>
-                    <div className="font-bold text-white text-lg">{t.name}</div>
-                    <div className="text-sm text-gray-500">{t.role}</div>
+                    <div className="font-bold text-white text-lg flex items-center gap-2">
+                      {t.name}
+                      <Icons.Check className="w-4 h-4 text-green-400" />
+                    </div>
+                    <div className="text-sm text-gray-500 flex items-center gap-1">
+                      {t.role} <span className="text-xs bg-white/10 px-2 py-0.5 rounded-full text-gray-400">Verified User</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -264,7 +299,7 @@ export default function LandingPage() {
       <section className="py-[400px] relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/40 to-purple-900/40"></div>
         <div className="container-custom relative z-10 flex flex-col items-center text-center">
-          <h2 className="heading-lg mb-16">Ready to Simplify Lending?</h2>
+          <h2 className="heading-lg mb-24">Ready to Simplify Lending?</h2>
           <p className="text-xl text-gray-300 mb-20 max-w-3xl mx-auto">
             Join thousands of users who are growing their business with LendLedger.
           </p>
@@ -284,9 +319,19 @@ export default function LandingPage() {
               </div>
               <span className="text-2xl font-bold text-white">LendLedger</span>
             </Link>
-            <p className="text-gray-500 text-sm leading-relaxed">
+            <p className="text-gray-500 text-sm leading-relaxed mb-8">
               The smartest way to track loans and manage repayments. Secure, fast, and reliable.
             </p>
+            <div className="flex flex-col gap-2 text-sm text-gray-400">
+              <div className="flex items-center gap-2 justify-center md:justify-start">
+                <Icons.Shield className="w-4 h-4 text-indigo-500" />
+                <span>ISO 27001 Certified</span>
+              </div>
+              <div className="flex items-center gap-2 justify-center md:justify-start">
+                <Icons.Lock className="w-4 h-4 text-indigo-500" />
+                <span>256-bit Encryption</span>
+              </div>
+            </div>
           </div>
 
           {[
@@ -295,7 +340,7 @@ export default function LandingPage() {
             { title: "Legal", links: ["Privacy Policy", "Terms of Service", "Cookie Policy"] }
           ].map((col, i) => (
             <div key={i} className="flex flex-col items-center md:items-start">
-              <h4 className="font-bold text-white mb-8 text-lg">{col.title}</h4>
+              <h4 className="font-bold text-white mb-12 text-lg">{col.title}</h4>
               <ul className="space-y-4">
                 {col.links.map((link) => (
                   <li key={link}>
@@ -307,6 +352,25 @@ export default function LandingPage() {
               </ul>
             </div>
           ))}
+
+          {/* Contact Column - NEW */}
+          <div className="flex flex-col items-center md:items-start">
+            <h4 className="font-bold text-white mb-12 text-lg">Contact Us</h4>
+            <ul className="space-y-4 text-sm text-gray-500">
+              <li className="flex items-center gap-3 justify-center md:justify-start">
+                <span className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-indigo-400"><Icons.Bell className="w-4 h-4" /></span>
+                <span>support@lendledger.in</span>
+              </li>
+              <li className="flex items-center gap-3 justify-center md:justify-start">
+                <span className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-indigo-400"><Icons.Zap className="w-4 h-4" /></span>
+                <span>+91 98765 43210</span>
+              </li>
+              <li className="flex items-center gap-3 justify-center md:justify-start">
+                <span className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-indigo-400"><Icons.Shield className="w-4 h-4" /></span>
+                <span>Fintech Hub, Bangalore</span>
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="container-custom mt-24 pt-8 border-t border-white/5 text-center text-gray-600 text-sm">
           &copy; {new Date().getFullYear()} LendLedger. All Rights Reserved.
